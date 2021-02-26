@@ -1,5 +1,7 @@
 package com.nagarro.ordermanagement.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AppUserDto {
 
 	private String userName;
@@ -8,6 +10,7 @@ public class AppUserDto {
 
 	private String email;
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 
 	private String userType;
