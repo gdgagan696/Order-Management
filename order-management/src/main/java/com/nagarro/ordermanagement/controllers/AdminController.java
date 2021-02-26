@@ -26,7 +26,7 @@ public class AdminController {
 	@Autowired
 	private AdminManagementService adminManagementService;
 
-	@GetMapping("/allOrder")
+	@GetMapping("/allOrders")
 	public ResponseEntity<List<OrderPlaceDto>> getAdminAllOrders() {
 		LOG.debug("Inside getAdminAllOrders method");
 		return new ResponseEntity<List<OrderPlaceDto>>(adminManagementService.getAdminAllOrders(), HttpStatus.OK);

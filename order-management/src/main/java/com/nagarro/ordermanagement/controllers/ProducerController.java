@@ -28,7 +28,7 @@ public class ProducerController {
 	@Autowired
 	private ProducerManagementService producerManagementService;
 
-	@GetMapping("/allOrder/{producerUserName}")
+	@GetMapping("/allOrders/{producerUserName}")
 	public ResponseEntity<List<OrderPlaceDto>> getProducerAllOrders(
 			@PathVariable(required = false) String producerUserName, HttpServletRequest request) {
 
