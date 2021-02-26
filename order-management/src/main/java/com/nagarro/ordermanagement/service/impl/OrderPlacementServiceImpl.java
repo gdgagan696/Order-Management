@@ -111,9 +111,12 @@ public class OrderPlacementServiceImpl implements OrderPlacementService {
 	public OrderPlaceDto updateOrderStatus(String orderId, String orderStatus) {
 		LOG.debug("Inside updateOrderStatus method");
 		OrderPlaceDto orderPlaceDto = null;
-		if (!orderStatus.equalsIgnoreCase(OrderStatus.CANCEL.name()) && allOrders.containsKey(orderId)) {
+		if (OrderStatus.CANCEL.name().equalsIgnoreCase(orderStatus) && allOrders.containsKey(orderId)) {
 			orderPlaceDto = allOrders.get(orderId);
 			orderPlaceDto.setOrderStatus(orderStatus);
+		}
+		else {
+			throw new OrderManagementException(ExceptionMessageConstants.ERROR_UPDATE_ORDER_STATUS);
 		}
 		return orderPlaceDto;
 
