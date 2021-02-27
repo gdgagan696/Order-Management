@@ -10,5 +10,7 @@ public class ExceptionMessageConstants {
 	public static final String ORDER_ALREADY_APPROVED_BY_PRODUCER = "Order already approved by the producer or not in under admin approval.";
 	public static final String NO_PRODUCER_AVAILABLE = "No Producer available by your producer username.";
 	public static final String ERROR_UPDATE_ORDER_STATUS = "Invalid Order Id or order status given by you is not CANCEL.";
+	public static final String INVALID_QUANTITY = "Quantity can not be null and must be atleast 1.";
+	public static final String NULL_ERROR = "Service Description Id,Service Type,Quantity,Pin Code,Deliver to Email or Delivery Address can not be null.";
 
 }

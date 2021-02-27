@@ -104,7 +104,8 @@ public class ProducerManagementServiceImpl implements ProducerManagementService 
 		orderInfoMap.put("consumerEmail", orderPlaceDto.getDeliverToEmail());
 		orderInfoMap.put("orderId", orderPlaceDto.getOrderId());
 		orderInfoMap.put("orderStatus", orderPlaceDto.getOrderStatus());
-		orderInfoMap.put("workDescription", orderPlaceDto.getWorkDescription());
+		orderInfoMap.put("workDescription",
+				Objects.nonNull(orderPlaceDto.getWorkDescription()) ? orderPlaceDto.getWorkDescription() : "");
 		LOG.debug("After prepareMapForSending method:{}", orderInfoMap);
 
 	}

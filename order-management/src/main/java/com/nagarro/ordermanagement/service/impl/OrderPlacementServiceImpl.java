@@ -45,6 +45,7 @@ public class OrderPlacementServiceImpl implements OrderPlacementService {
 	@Override
 	public OrderPlaceDto placeOrder(OrderPlaceDto orderPlaceDto, String userName) {
 		LOG.debug("Inside placeOrder method");
+		validateOrderPlaceDto(orderPlaceDto);
 		InstanceInfo productCatalogInstance = eurekaClient
 				.getNextServerFromEureka(CommonConstants.SERVICE_CATALOGUE_APP_NAME, false);
 		String serviceCatalogueBaseUrl = productCatalogInstance.getHomePageUrl();
@@ -71,7 +72,7 @@ public class OrderPlacementServiceImpl implements OrderPlacementService {
 			orderPlaceDto.setOrderId(UUID.randomUUID().toString());
 			orderPlaceDto.setOrderStatus(OrderStatus.SENT_FOR_ADMIN_APPROVAL.name());
 			orderPlaceDto.setCurrency(serviceDescriptionDto.getCurrency());
-			orderPlaceDto.setDeliverTo(userName);
+			orderPlaceDto.setDeliverTo(Objects.nonNull(orderPlaceDto.getDeliverTo())?orderPlaceDto.getDeliverTo():userName);
 
 			allOrders.put(orderPlaceDto.getOrderId(), orderPlaceDto);
 			adminManagementService.addAdminOrder(orderPlaceDto);
@@ -80,6 +81,19 @@ public class OrderPlacementServiceImpl implements OrderPlacementService {
 
 		} else {
 			throw new OrderManagementException(ExceptionMessageConstants.INVALID_SERVICE_TYPE_DESCRIPTION_ID);
+		}
+
+	}
+
+	private void validateOrderPlaceDto(OrderPlaceDto orderPlaceDto) {
+		if (Objects.isNull(orderPlaceDto.getServiceDescriptionId()) || Objects.isNull(orderPlaceDto.getServiceType())
+				|| Objects.isNull(orderPlaceDto.getQuantity()) || Objects.isNull(orderPlaceDto.getPinCode())
+				|| Objects.isNull(orderPlaceDto.getDeliverToEmail())
+				|| Objects.isNull(orderPlaceDto.getDeliveryAddress())) {
+			throw new OrderManagementException(ExceptionMessageConstants.NULL_ERROR);
+		}
+		if (Objects.nonNull(orderPlaceDto.getQuantity()) && orderPlaceDto.getQuantity() <= 0) {
+			throw new OrderManagementException(ExceptionMessageConstants.INVALID_QUANTITY);
 		}
 
 	}
